@@ -1,0 +1,4 @@
+_pychache_
+.pyc
+.env
+virtualenv

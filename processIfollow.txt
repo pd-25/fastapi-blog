@@ -1,0 +1,6 @@
+1. create project folder
+2. create virtual env - "python -m venv venv-name"
+3. active venv - "venv-name/Scripts/activate"
+4. git init
+5. create a folder backend/requirements.txt
+6. pip install -r requirements.txt

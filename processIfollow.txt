@@ -4,3 +4,12 @@
 4. git init
 5. create a folder backend/requirements.txt
 6. pip install -r requirements.txt
+
+
+to connect db-----
+1. install - SQLAlchemy,psycopg2,python-dotenv
+2. create .env file and declare required db variable
+3. in config.py declare the env variable with db url
+4. create session.py and use the db url
+5. tell the main.py about session.py
+

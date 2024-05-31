@@ -19,3 +19,5 @@ for migration install alembic
 3. alembic directory and alembic.ini will eb created
 4. set the db url in albemic/env.py from config.py
 
+now create model
+

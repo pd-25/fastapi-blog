@@ -13,3 +13,9 @@ to connect db-----
 4. create session.py and use the db url
 5. tell the main.py about session.py
 
+for migration install alembic
+1. install alembic
+2. init alembic - alembic init alembic(this the folder name)
+3. alembic directory and alembic.ini will eb created
+4. set the db url in albemic/env.py from config.py
+

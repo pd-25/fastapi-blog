@@ -19,5 +19,14 @@ for migration install alembic
 3. alembic directory and alembic.ini will eb created
 4. set the db url in albemic/env.py from config.py
 
-now create model
+now create model under db.models/mm.py
 
+then import the model in base.py to understand albemic 
+
+now-
+1. alembic revision --autogenerate -m "create user and  blog table"
+2. migration created , migrate it to db by- alembic upgrade head
+
+create folder schemas for data validation
+
+create apis folder

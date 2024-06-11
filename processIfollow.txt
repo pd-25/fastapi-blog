@@ -18,7 +18,7 @@ for migration install alembic
 2. init alembic - alembic init alembic(this the folder name)
 3. alembic directory and alembic.ini will eb created
 4. set the db url in albemic/env.py from config.py
-
+pip install --force-reinstall psycopg2==2.9.6
 now create model under db.models/mm.py
 
 then import the model in base.py to understand albemic 

@@ -7,7 +7,7 @@ from db.session import get_db
 from core.hashing import Hasher
 from db.repository.login import get_user_by_email
 from core.security import create_access_token
-
+from core.config import settings
 router = APIRouter()
 
 
@@ -33,3 +33,23 @@ def login_for_access_token(
         )
     access_token = create_access_token(data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer"}
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
+
+def get_current_user(token: str= Depends(oauth2_scheme), db: Session=Depends(get_db)):
+    credentials_exceptions = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials, Please login again"
+    )
+    
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exceptions
+    except JWTError:
+        raise credentials_exceptions
+    user = get_user_by_email(email=email, db=db)
+    if user is None:
+        raise credentials_exceptions
+    return user

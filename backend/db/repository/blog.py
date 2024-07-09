@@ -6,6 +6,8 @@ from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException
 import logging
+
+
 def create_new_blog(blog: CreateBlog, db: Session, author_id: int = 1):
     # print(blog)
     # return
@@ -33,24 +35,29 @@ def update_blog_by_id(id: int, blog: UpdateBlog, db: Session, author_id: int = 1
         blog_in_db = db.query(Blog).filter(Blog.id == id).first()
 
         if not blog_in_db:
-            return
+            return {"error": f"{id} does not exist in blog."}
+        if not blog_in_db.author_id == author_id:
+            return {"error": f"Only auther cna update."}
 
         blog_in_db.title = blog.title
         blog_in_db.content = blog.content
 
         db.add(blog_in_db)
         db.commit()
-        
+
         return blog_in_db
 
     except SQLAlchemyError as e:
-        logger.debug('insertion-Error', exc_info=e)
+        logger.debug("insertion-Error", exc_info=e)
         raise HTTPException(status_code=500, detail="Insertion Error")
 
+
 def delete_blog_by_id(id: int, db: Session, author_id: int):
-    blog_in_db = db.query(Blog).filter(Blog.id==id)
+    blog_in_db = db.query(Blog).filter(Blog.id == id)
     if not blog_in_db.first():
-        return {"error":f"{id} not found in db"}
+        return {"error": f"{id} not found in db"}
+    if not blog_in_db.first().author_id == author_id:
+        return {"error": f"Only auther cna delete."}
     blog_in_db.delete()
     db.commit()
-    return {"msg":f"Blog with {id} deleted successfully"}
+    return {"msg": f"Blog with {id} deleted successfully"}
